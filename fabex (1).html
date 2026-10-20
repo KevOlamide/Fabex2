@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FABEX – Gestion de formations</title>
+<style>
+:root{--bg:#f3f5fa;--hd:#fff;--cd:#fff;--tx:#162033;--mu:#6b7690;--ln:#e3e8f2;--ac:#3b6ef5;--ok:#17996a;--wa:#c98200;--er:#d6455d;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#222b37;--hd:#10151c;--cd:#151b23;--tx:#eef2f9;--mu:#98a3b8;--ln:#27303d;--ac:#7ea4ff;--ok:#43d19e;--wa:#f0b43c;--er:#ff7a90;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#222b37;--hd:#10151c;--cd:#151b23;--tx:#eef2f9;--mu:#98a3b8;--ln:#27303d;--ac:#7ea4ff;--ok:#43d19e;--wa:#f0b43c;--er:#ff7a90;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:90px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--hd);z-index:10}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--hd);display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--ln)}
+.av{width:38px;height:38px;border-radius:50%;background:var(--ac);color:#fff;display:grid;place-items:center;font-weight:700}
+header h1{flex:1;font-size:19px;margin:0;letter-spacing:.5px}
+.ic{width:40px;height:40px;border-radius:50%;border:1px solid var(--ln);background:var(--cd);color:var(--tx);font-size:18px;position:relative;cursor:pointer}
+.bd{position:absolute;top:-3px;right:-3px;background:var(--er);color:#fff;border-radius:99px;font-size:11px;padding:1px 6px}
+main{max-width:860px;margin:0 auto;padding:12px}
+.cd{background:var(--cd);border-radius:14px;padding:14px;margin-bottom:12px;border:1px solid var(--ln)}
+h2{font-size:17px;margin:0 0 8px}h3{margin:0 0 10px}
+.ch2{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--ln);margin-bottom:8px}
+a{color:var(--ac);font-weight:600;cursor:pointer;text-decoration:none}
+.mu,small{color:var(--mu)}small{display:block;font-size:12.5px}
+.kp{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--ln)}
+.kp b{display:block;font-size:22px}
+.bar{width:38%;height:6px;background:var(--ln);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+.chips{display:flex;gap:8px;overflow-x:auto;margin-bottom:12px;padding-bottom:2px}
+.pill{border:1px solid var(--ln);background:none;color:var(--tx);border-radius:99px;padding:8px 16px;white-space:nowrap;cursor:pointer;font:inherit}
+.pill.on{border-color:var(--ac);color:var(--ac);font-weight:600}
+.fc{border:1px solid var(--ln);border-left:4px solid var(--ac);border-radius:10px;padding:8px 10px;margin:6px 0;cursor:pointer}
+.fr{display:flex;justify-content:space-between}
+.ch{font-size:12px;padding:2px 9px;border-radius:99px;background:var(--ln);color:var(--tx)}
+.ch.ok{color:var(--ok)}.ch.wa{color:var(--wa)}.ch.er{color:var(--er)}
+.day{border-top:1px solid var(--ln);padding:8px 0}.day.td .dh{color:var(--ac)}
+.dh{display:flex;justify-content:space-between;font-weight:600;text-transform:capitalize}
+.ad{border:1px solid var(--ln);background:none;color:var(--ac);border-radius:8px;width:30px;cursor:pointer}
+.wk{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:8px}
+.b1,.b2{border-radius:10px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer;border:1px solid var(--ac);display:inline-block}
+.b1{background:var(--ac);color:#fff}.b2{background:none;color:var(--ac)}
+.tr{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--ln)}.tr span{flex:1}.dn{text-decoration:line-through;opacity:.6}
+.x{background:none;border:0;color:var(--mu);cursor:pointer;font-size:16px}
+.row{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--ln)}.row>div{flex:1}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.tile{background:var(--cd);border:1px solid var(--ln);border-radius:14px;padding:18px 10px;text-align:center;cursor:pointer;font-weight:600}.tile span{display:block;font-size:28px}
+label{display:block;margin:8px 0;font-size:13px;color:var(--mu)}
+input,select,textarea{width:100%;margin-top:4px;padding:10px;border-radius:10px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font:inherit}
+input[type=checkbox]{width:20px;margin:2px 0}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;align-items:flex-end;justify-content:center}
+.md{background:var(--cd);width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px}
+.ra{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}.er{color:var(--er);margin:6px 0}
+.scr{background:var(--ln);text-align:center;border-radius:6px;padding:3px;font-size:12px;color:var(--mu);margin:8px 0}
+.sg{display:grid;gap:6px}
+.st{min-height:50px;border-radius:9px;border:1px dashed var(--mu);background:none;color:var(--mu);font-size:11px;cursor:pointer;overflow:hidden;padding:2px}
+.st.on{background:var(--ac);border:1px solid var(--ac);color:#fff}.st small{color:inherit;font-size:10px;opacity:.8}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--hd);border-top:1px solid var(--ln);display:flex;justify-content:space-around;padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));z-index:20}
+nav button{background:none;border:0;color:var(--tx);font:12px system-ui;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;flex:1}
+nav button span{font-size:22px}nav button.on{color:var(--ac)}
+#t{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:8px 16px;border-radius:99px;z-index:60;display:none}
+.inv{background:#fff;color:#111;padding:18px;border-radius:10px}.inv table{width:100%;border-collapse:collapse;margin:12px 0}.inv td,.inv th{padding:6px;border-bottom:1px solid #ddd;text-align:left}.inv .r{text-align:right}
+@media print{body *{visibility:hidden}.inv,.inv *{visibility:visible}.inv{position:absolute;left:0;top:0;width:100%}}
+</style></head>
+<body>
+<header><div class="av">FX</div><h1>FABEX ⌄</h1><button class="ic" onclick="qa()">＋</button><button class="ic" onclick="go('ia')">🔔<span class="bd" id="bd"></span></button></header>
+<main id="app"></main>
+<nav id="nv"></nav>
+<div class="ov" id="m" onclick="if(event.target==this)cm()"></div><div id="t"></div>
+<script>
+const $=s=>document.querySelector(s),e=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=n=>Math.round(n).toLocaleString('fr-FR')+' CFA';
+const today=new Date();today.setHours(0,0,0,0);
+const iso=d=>new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const monday=d=>addD(d,-((d.getDay()+6)%7));
+const fd=d=>new Date(d+'T00:00').toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
+function seed(){const M=monday(today),D=n=>iso(addD(M,n)),sd=(...n)=>Object.fromEntries(n.map((x,i)=>[Math.floor(i/4)+'-'+i%4,x]));
+return{n:100,
+clients:[{id:1,nom:'Togocom SA',contact:'Ama Mensah',email:'rh@togocom.tg',tel:'+228 90 00 00 01'},{id:2,nom:'Ecobank Lomé',contact:'Koffi Adjovi',email:'formation@ecobank.tg',tel:'+228 91 00 00 02'},{id:3,nom:'Nova Logistics',contact:'Séna Dogbé',email:'drh@nova.tg',tel:'+228 92 00 00 03'}],
+intervenants:[{id:1,nom:'Dr Kossi Agbeko',spec:'Management & leadership',tarif:150000},{id:2,nom:'Afi Lawson',spec:'Excel & Data',tarif:100000},{id:3,nom:'Yao Dossou',spec:'Sécurité & QHSE',tarif:120000}],
+salles:[{id:1,nom:'Salle Kara',rows:3,cols:4},{id:2,nom:'Salle Atakora',rows:4,cols:5}],
+formations:[
+{id:1,titre:'Leadership & management d’équipe',cid:1,iid:1,sid:2,date:D(1),h1:'09:00',h2:'17:00',prix:900000,seats:sd('Koffi A.','Ama T.','Séna D.','Yao M.','Afi K.','Edem L.')},
+{id:2,titre:'Excel avancé & tableaux de bord',cid:2,iid:2,sid:1,date:D(2),h1:'09:00',h2:'16:00',prix:600000,seats:sd('Paul N.','Rita B.','Max O.','Joël P.')},
+{id:3,titre:'Sécurité & prévention incendie',cid:3,iid:3,sid:2,date:D(3),h1:'08:30',h2:'15:30',prix:750000,seats:sd('Komi Z.','Ida S.')},
+{id:4,titre:'Communication professionnelle',cid:1,iid:1,sid:1,date:D(-6),h1:'09:00',h2:'13:00',prix:500000,seats:sd('Nina F.','Eli H.','Sam G.')},
+{id:5,titre:'Gestion du temps & priorités',cid:2,iid:2,sid:2,date:D(8),h1:'09:00',h2:'16:00',prix:450000,seats:{}}],
+taches:[{id:1,txt:'Envoyer les convocations',fid:1,due:D(-2),done:false},{id:2,txt:'Imprimer les supports Excel',fid:2,due:D(1),done:false},{id:3,txt:'Réserver le matériel incendie',fid:3,due:D(2),done:false},{id:4,txt:'Relancer Togocom pour le paiement',fid:4,due:D(2),done:false},{id:5,txt:'Valider le devis Nova Logistics',fid:0,due:D(0),done:true}],
+factures:[{id:1,fid:4,num:'FAB-'+today.getFullYear()+'-001',date:D(-5),paye:false}]}}
+let S;try{S=JSON.parse(localStorage.getItem('fabex1'))}catch(x){}S=S||seed();
+const save=()=>{try{localStorage.setItem('fabex1',JSON.stringify(S))}catch(x){}};
+const id=()=>++S.n,by=(k,i)=>S[k].find(x=>x.id==i)||{};
+const cap=f=>(by('salles',f.sid).rows*by('salles',f.sid).cols)||0,occ=f=>Object.keys(f.seats).length,ttc=f=>Math.round(f.prix*1.18),inv=f=>S.factures.find(x=>x.fid==f.id);
+const srt=(a,b)=>(a.date+a.h1>b.date+b.h1?1:-1),clash=f=>S.formations.filter(o=>o.id!=f.id&&o.date==f.date&&o.h1<f.h2&&f.h1<o.h2&&(o.sid==f.sid||o.iid==f.iid));
+let V='home',AT='plan',W=0,FL='all',AF=null;
+const toast=t=>{const x=$('#t');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',2200)};
+const M=h=>{$('#m').innerHTML='<div class="md">'+h+'</div>';$('#m').style.display='flex'},cm=()=>{$('#m').style.display='none'};
+const go=v=>{V=v;R();scrollTo(0,0)};
+function form(t,F,cb,v={},af=null){AF=af;
+M(`<h3>${t}</h3>${F.map(f=>`<label>${f.l}${f.t=='sel'?`<select name="${f.n}">${f.o.map(o=>`<option value="${o[0]}" ${o[0]==v[f.n]?'selected':''}>${e(o[1])}</option>`).join('')}</select>`:`<input name="${f.n}" type="${f.t||'text'}" value="${e(v[f.n]??'')}">`}</label>`).join('')}<p id="er" class="er"></p><div class="ra"><button class="b2" onclick="cm()">Annuler</button><button class="b1" onclick="sub()">Enregistrer</button></div>`);
+window.sub=()=>{const o={};document.querySelectorAll('#m [name]').forEach(i=>o[i.name]=i.type=='number'?+i.value:i.value);const r=cb(o);if(r)$('#er').textContent=r;else{cm();save();R();if(AF)AF()}}}
+const fc=f=>`<div class="fc" onclick="det(${f.id})"><div class="fr"><b>${f.h1}–${f.h2}</b><span class="ch ${occ(f)>=cap(f)?'ok':''}">${occ(f)}/${cap(f)} places</span></div>${e(f.titre)}<small>${e(by('salles',f.sid).nom)} · ${e(by('intervenants',f.iid).nom)} · ${e(by('clients',f.cid).nom)}</small></div>`;
+const trow=t=>`<div class="tr"><input type="checkbox" ${t.done?'checked':''} onclick="tg(${t.id})"><span class="${t.done?'dn':''}">${e(t.txt)}<small>${t.due?fd(t.due):''} ${t.fid?'· '+e(by('formations',t.fid).titre):''}</small></span><button class="x" onclick="dl('taches',${t.id})">✕</button></div>`;
+function tg(i){const t=by('taches',i);t.done=!t.done;save();R()}
+function dl(k,i){const u={clients:'cid',intervenants:'iid',salles:'sid'}[k];if(u&&S.formations.some(f=>f[u]==i))return toast('Utilisé par une formation');S[k]=S[k].filter(x=>x.id!=i);save();R()}
+function alerts(){const T=iso(today),A=[];
+S.formations.forEach(f=>{clash(f).forEach(o=>{if(o.id>f.id)A.push(['er','Conflit',`« ${f.titre} » et « ${o.titre} » se chevauchent (${fd(f.date)})`])});
+if(f.date<T&&!inv(f))A.push(['wa','Facturation',`« ${f.titre} » terminée : facture à émettre`]);
+if(f.date>=T&&f.date<=iso(addD(today,7))&&occ(f)<cap(f)/2)A.push(['wa','Remplissage',`« ${f.titre} » : ${occ(f)}/${cap(f)} places pourvues`])});
+S.factures.filter(x=>!x.paye).forEach(x=>A.push(['wa','Encaissement',`${x.num} en attente (${fmt(ttc(by('formations',x.fid)))})`]));
+S.taches.filter(t=>!t.done&&t.due&&t.due<T).forEach(t=>A.push(['er','Tâche en retard',t.txt]));return A}
+/* VUES */
+function home(){const T=iso(today),up=S.formations.filter(f=>f.date>=T).sort(srt);
+const fa=S.factures.map(x=>({x,t:ttc(by('formations',x.fid))})),ca=fa.reduce((a,b)=>a+b.t,0),du=fa.filter(b=>!b.x.paye).reduce((a,b)=>a+b.t,0);
+const ap=S.formations.reduce((a,f)=>a+occ(f),0),cp=S.formations.reduce((a,f)=>a+cap(f),0),fl=cp?Math.round(ap/cp*100):0;
+const k=(l,v,p)=>`<div class="kp"><div><span class="mu">${l}</span><b>${v}</b></div><div class="bar"><i style="width:${Math.min(100,p)}%"></i></div></div>`;
+return `<section class="cd"><div class="ch2"><h2>Données analytiques</h2><a onclick="go('ia')">Voir les alertes</a></div>${k('Total facturé (TTC)',fmt(ca),ca?100:0)}${k('À encaisser',fmt(du),ca?du/ca*100:0)}${k('Formations à venir',up.length,up.length*12)}${k('Apprenants inscrits',ap,fl)}${k('Taux de remplissage',fl+'%',fl)}</section>
+<section class="cd"><div class="ch2"><h2>Séances à venir</h2><a onclick="AT='plan';go('act')">Tout voir</a></div>${up.slice(0,4).map(fc).join('')||'<p class="mu">Aucune séance à venir.</p>'}<p><a onclick="nf()">Ajouter une séance</a></p></section>
+<section class="cd"><div class="ch2"><h2>Tâches prioritaires</h2><a onclick="AT='task';go('act')">Tout voir</a></div>${S.taches.filter(t=>!t.done).sort((a,b)=>a.due>b.due?1:-1).slice(0,4).map(trow).join('')||'<p class="mu">Tout est à jour 🎉</p>'}</section>`}
+function act(){const tb=[['plan','Planning'],['list','Formations'],['task','Tâches']];
+let h=`<div class="chips">${tb.map(t=>`<button class="pill ${AT==t[0]?'on':''}" onclick="AT='${t[0]}';R()">${t[1]}</button>`).join('')}<button class="pill" onclick="nf()">＋ Formation</button></div>`;
+if(AT=='plan'){const d0=addD(monday(today),W*7);h+=`<section class="cd"><div class="wk"><button class="b2" onclick="W--;R()">‹</button><b>Semaine du ${fd(iso(d0))}</b><button class="b2" onclick="W++;R()">›</button></div><div style="text-align:center;margin-bottom:6px"><a onclick="W=0;R()">Revenir à aujourd’hui</a></div>`;
+for(let i=0;i<7;i++){const d=iso(addD(d0,i)),L=S.formations.filter(f=>f.date==d).sort(srt);h+=`<div class="day ${d==iso(today)?'td':''}"><div class="dh">${fd(d)}<button class="ad" onclick="nf('${d}')">+</button></div>${L.map(fc).join('')||'<small>Libre</small>'}</div>`}h+='</section>'}
+else if(AT=='list'){const T=iso(today),L=S.formations.filter(f=>FL=='all'||(FL=='up'?f.date>=T:f.date<T)).sort(srt);
+h+=`<div class="chips">${[['all','Toutes'],['up','À venir'],['past','Passées']].map(c=>`<button class="pill ${FL==c[0]?'on':''}" onclick="FL='${c[0]}';R()">${c[1]}</button>`).join('')}</div><section class="cd">${L.map(f=>`<div class="row"><div>${fd(f.date)}${fc(f)}</div><span class="ch ${inv(f)?(inv(f).paye?'ok':'wa'):''}">${inv(f)?(inv(f).paye?'Payée':'Facturée'):'Non facturée'}</span></div>`).join('')||'<p class="mu">Aucune formation.</p>'}</section>`}
+else{const t=S.taches,d=t.filter(x=>x.done).length,p=t.length?Math.round(d/t.length*100):0;
+h+=`<section class="cd"><div class="ch2"><h2>Suivi des tâches · ${p}%</h2><a onclick="nt()">+ Tâche</a></div><div class="bar" style="width:100%;margin-bottom:6px"><i style="width:${p}%"></i></div>${[...t].sort((a,b)=>a.done-b.done||(a.due>b.due?1:-1)).map(trow).join('')||'<p class="mu">Aucune tâche.</p>'}</section>`}return h}
+function ia(){const A=alerts();return `<section class="cd"><h2>Agents IA · veille automatique</h2><small>Planificateur (conflits), Facturation, Remplissage et Relances surveillent vos données en continu.</small></section><section class="cd">${A.map(a=>`<div class="row"><span class="ch ${a[0]}">${a[1]}</span><div>${e(a[2])}</div></div>`).join('')||'<p class="mu">✅ Aucune alerte : tout est sous contrôle.</p>'}</section>`}
+function msg(){return `<section class="cd"><h2>Messages & modèles</h2><label>Modèle<select id="mt" onchange="gm()"><option value="0">Convocation apprenants</option><option value="1">Briefing intervenant</option><option value="2">Relance facture client</option></select></label><label>Formation<select id="mf" onchange="gm()">${S.formations.map(f=>`<option value="${f.id}">${e(f.titre)} – ${fd(f.date)}</option>`).join('')}</select></label><textarea id="mx" rows="10"></textarea><div class="ra"><button class="b2" onclick="navigator.clipboard&&navigator.clipboard.writeText($('#mx').value).then(()=>toast('Copié'))">Copier</button><a class="b1" id="wa" target="_blank" style="color:#fff">WhatsApp</a></div></section>`}
+function gm(){const f=by('formations',$('#mf').value),c=by('clients',f.cid),i=by('intervenants',f.iid),s=by('salles',f.sid),v=inv(f),t=+$('#mt').value;
+const x=[`Bonjour,\n\nVous êtes convoqué(e) à la formation « ${f.titre} » le ${fd(f.date)}, de ${f.h1} à ${f.h2}, en ${s.nom}. Intervenant : ${i.nom}.\nMerci d’arriver 15 minutes avant le début.\n\nL’équipe FABEX`,
+`Bonjour ${i.nom},\n\nRappel de votre intervention « ${f.titre} » le ${fd(f.date)} (${f.h1}–${f.h2}) chez ${c.nom}, en ${s.nom} (${occ(f)} participants inscrits sur ${cap(f)} places).\n\nCordialement,\nFABEX`,
+`Bonjour ${c.contact},\n\nSauf erreur de notre part, la facture ${v?v.num:'(à émettre)'} de ${fmt(ttc(f))} TTC relative à « ${f.titre} » reste à régler. Merci de nous confirmer la date de paiement.\n\nCordialement,\nFABEX`][t];
+$('#mx').value=x;$('#wa').href='https://wa.me/?text='+encodeURIComponent(x)}
+function manage(){return `<div class="tiles">${[['clients','🏢','Clients'],['intervenants','🎓','Intervenants'],['salles','🪑','Salles & places'],['factures','🧾','Factures']].map(t=>`<div class="tile" onclick="go('${t[0]}')"><span>${t[1]}</span>${t[2]}</div>`).join('')}<div class="tile" onclick="AT='task';go('act')"><span>✅</span>Tâches</div><div class="tile" onclick="if(!window._r){window._r=1;toast('Touchez à nouveau pour réinitialiser')}else{S=seed();save();window._r=0;go('home')}"><span>♻️</span>Données démo</div></div>`}
+const CFG={
+clients:{t:'Clients',f:[{n:'nom',l:'Entreprise'},{n:'contact',l:'Contact RH'},{n:'email',l:'E-mail',t:'email'},{n:'tel',l:'Téléphone',t:'tel'}],r:c=>{const L=S.formations.filter(f=>f.cid==c.id);return `<b>${e(c.nom)}</b><small>${e(c.contact)} · ${e(c.email)} · ${e(c.tel)}</small><small>${L.length} formation(s) · ${fmt(L.reduce((a,f)=>a+ttc(f),0))} TTC</small>`}},
+intervenants:{t:'Intervenants',f:[{n:'nom',l:'Nom'},{n:'spec',l:'Spécialité'},{n:'tarif',l:'Tarif / jour (CFA)',t:'number'}],r:c=>`<b>${e(c.nom)}</b><small>${e(c.spec)} · ${fmt(c.tarif||0)}/jour</small><small>${S.formations.filter(f=>f.iid==c.id).length} séance(s)</small>`},
+salles:{t:'Salles & places',f:[{n:'nom',l:'Nom de la salle'},{n:'rows',l:'Rangées (1–10)',t:'number'},{n:'cols',l:'Places par rangée (1–12)',t:'number'}],r:c=>`<b>${e(c.nom)}</b><small>${c.rows} × ${c.cols} = ${c.rows*c.cols} places assises</small>`}};
+function lv(k){const c=CFG[k];return `<div class="chips"><button class="pill" onclick="go('manage')">‹ Gérer</button><button class="pill on" onclick="ad('${k}')">＋ Ajouter</button></div><section class="cd"><h2>${c.t} (${S[k].length})</h2>${S[k].map(x=>`<div class="row"><div>${c.r(x)}</div><button class="x" onclick="dl('${k}',${x.id})">✕</button></div>`).join('')}</section>`}
+function ad(k){form('Ajouter · '+CFG[k].t,CFG[k].f,o=>{if(!o[CFG[k].f[0].n])return'Le premier champ est requis';if(k=='salles'&&!(o.rows>=1&&o.rows<=10&&o.cols>=1&&o.cols<=12))return'Rangées 1–10, places 1–12';o.id=id();S[k].push(o)},{rows:3,cols:4})}
+function fac(){const nb=S.formations.filter(f=>!inv(f)).sort(srt);return `<div class="chips"><button class="pill" onclick="go('manage')">‹ Gérer</button></div><section class="cd"><h2>À facturer</h2>${nb.map(f=>`<div class="row"><div><b>${e(f.titre)}</b><small>${e(by('clients',f.cid).nom)} · ${fd(f.date)} · ${fmt(ttc(f))} TTC</small></div><button class="b2" onclick="mk(${f.id})">Facturer</button></div>`).join('')||'<p class="mu">Tout est facturé.</p>'}</section><section class="cd"><h2>Factures émises</h2>${S.factures.map(x=>{const f=by('formations',x.fid);return `<div class="row" onclick="ivw(${x.id})" style="cursor:pointer"><div><b>${x.num}</b><small>${e(by('clients',f.cid).nom)} · ${e(f.titre)}</small></div><div style="text-align:right">${fmt(ttc(f))}<br><span class="ch ${x.paye?'ok':'wa'}">${x.paye?'Payée':'En attente'}</span></div></div>`}).join('')||'<p class="mu">Aucune facture.</p>'}</section>`}
+function mk(fid){const n=S.factures.length+1;const x={id:id(),fid,num:`FAB-${today.getFullYear()}-${String(n).padStart(3,'0')}`,date:iso(today),paye:false};S.factures.push(x);save();R();ivw(x.id)}
+function ivw(i){const x=by('factures',i),f=by('formations',x.fid),c=by('clients',f.cid),tv=ttc(f)-f.prix;
+M(`<div class="inv"><div class="fr"><div><h2 style="margin:0">FABEX</h2><small>Organisation de formations · Lomé</small></div><div style="text-align:right"><b>FACTURE ${x.num}</b><small>Émise le ${fd(x.date)}</small></div></div><p><b>${e(c.nom)}</b><br>À l’attention de ${e(c.contact)}<br>${e(c.email)}</p><table><tr><th>Désignation</th><th class="r">Montant</th></tr><tr><td>${e(f.titre)}<br><small>${fd(f.date)} · ${f.h1}–${f.h2} · ${occ(f)} participant(s)</small></td><td class="r">${fmt(f.prix)}</td></tr><tr><td class="r">TVA 18 %</td><td class="r">${fmt(tv)}</td></tr><tr><th class="r">Total TTC</th><th class="r">${fmt(ttc(f))}</th></tr></table><b>Statut : ${x.paye?'PAYÉE':'En attente de règlement'}</b></div><div class="ra"><button class="b2" onclick="cm()">Fermer</button><button class="b2" onclick="by('factures',${i}).paye=!by('factures',${i}).paye;save();R();ivw(${i})">${x.paye?'Marquer impayée':'Marquer payée'}</button><button class="b1" onclick="window.print()">Imprimer / PDF</button></div>`)}
+/* FORMATIONS */
+function nf(d){form('Nouvelle formation',[{n:'titre',l:'Intitulé'},{n:'cid',l:'Client',t:'sel',o:S.clients.map(c=>[c.id,c.nom])},{n:'iid',l:'Intervenant',t:'sel',o:S.intervenants.map(c=>[c.id,c.nom])},{n:'sid',l:'Salle',t:'sel',o:S.salles.map(c=>[c.id,c.nom+' ('+c.rows*c.cols+' pl.)'])},{n:'date',l:'Date',t:'date'},{n:'h1',l:'Début',t:'time'},{n:'h2',l:'Fin',t:'time'},{n:'prix',l:'Prix HT (CFA)',t:'number'}],o=>{
+if(!o.titre||!o.date)return'Intitulé et date requis';if(o.h2<=o.h1)return'Horaires invalides';
+const f={id:id(),titre:o.titre,cid:+o.cid,iid:+o.iid,sid:+o.sid,date:o.date,h1:o.h1,h2:o.h2,prix:o.prix||0,seats:{}};
+const c=clash(f);if(c.length)return'Conflit avec « '+c[0].titre+' » : salle ou intervenant déjà occupé';
+S.formations.push(f);[['Envoyer les convocations',-3],['Préparer supports et matériel',-2],['Émettre la facture',1]].forEach(([t,n])=>S.taches.push({id:id(),txt:t,fid:f.id,due:iso(addD(new Date(o.date+'T00:00'),n)),done:false}))},{date:d||iso(today),h1:'09:00',h2:'17:00',prix:500000})}
+function nt(){form('Nouvelle tâche',[{n:'txt',l:'Tâche'},{n:'due',l:'Échéance',t:'date'},{n:'fid',l:'Formation liée',t:'sel',o:[[0,'—'],...S.formations.map(f=>[f.id,f.titre])]}],o=>{if(!o.txt)return'Intitulé requis';S.taches.push({id:id(),txt:o.txt,due:o.due,fid:+o.fid,done:false})})}
+function qa(){M(`<h3>Créer</h3><div class="tiles">${[['nf()','📅','Formation'],['ad(\'clients\')','🏢','Client'],['ad(\'intervenants\')','🎓','Intervenant'],['ad(\'salles\')','🪑','Salle'],['nt()','✅','Tâche']].map(t=>`<div class="tile" onclick="${t[0]}"><span>${t[1]}</span>${t[2]}</div>`).join('')}</div>`)}
+function det(i){const f=by('formations',i),s=by('salles',f.sid),v=inv(f);let g='';
+for(let r=0;r<s.rows;r++)for(let c=0;c<s.cols;c++){const k=r+'-'+c,n=f.seats[k];g+=`<button class="st ${n?'on':''}" onclick="seat(${i},'${k}',${r*s.cols+c+1})">${r*s.cols+c+1}<small>${n?e(n.split(' ')[0]):''}</small></button>`}
+M(`<h3>${e(f.titre)}</h3><small>${fd(f.date)} · ${f.h1}–${f.h2} · ${e(s.nom)}<br>${e(by('clients',f.cid).nom)} · Intervenant : ${e(by('intervenants',f.iid).nom)}<br>Prix : ${fmt(f.prix)} HT · ${fmt(ttc(f))} TTC</small><div class="scr">TABLEAU / ÉCRAN</div><div class="sg" style="grid-template-columns:repeat(${s.cols},1fr)">${g}</div><p class="mu">${occ(f)}/${cap(f)} places attribuées · touchez une place pour assigner ou libérer</p><label>Ajouter des apprenants (séparés par des virgules, placés automatiquement)<input id="ap" placeholder="Ama T., Koffi D., …"></label><div class="ra"><button class="b2" onclick="addL(${i})">Placer</button></div><div class="ra"><button class="b2" onclick="dl2(${i})">Supprimer</button><button class="b2" onclick="cm();AT='task';go('act')">Tâches</button><button class="b1" onclick="${v?`ivw(${v.id})`:`mk(${i})`}">${v?'Voir la facture':'Générer la facture'}</button></div>`)}
+function seat(i,k,n){const f=by('formations',i);form('Place n° '+n,[{n:'nom',l:'Apprenant (vide = libérer la place)'}],o=>{if(o.nom.trim())f.seats[k]=o.nom.trim();else delete f.seats[k]},{nom:f.seats[k]},()=>det(i))}
+function addL(i){const f=by('formations',i),s=by('salles',f.sid),L=$('#ap').value.split(/[,\n]/).map(x=>x.trim()).filter(Boolean);let c=0;
+for(let r=0;r<s.rows&&L.length;r++)for(let q=0;q<s.cols&&L.length;q++){const k=r+'-'+q;if(!f.seats[k]){f.seats[k]=L.shift();c++}}
+save();R();det(i);toast(c+' placé(s)'+(L.length?' · salle complète, '+L.length+' sans place':''))}
+let dd=0;function dl2(i){if(!dd){dd=1;toast('Touchez à nouveau pour confirmer');return}dd=0;S.formations=S.formations.filter(f=>f.id!=i);S.factures=S.factures.filter(x=>x.fid!=i);S.taches=S.taches.filter(t=>t.fid!=i);save();cm();R()}
+/* ROUTEUR */
+function R(){const m={home,act,ia,msg,manage,factures:fac,clients:()=>lv('clients'),intervenants:()=>lv('intervenants'),salles:()=>lv('salles')};$('#app').innerHTML=m[V]();
+const nv=[['home','🏠','Accueil'],['act','🗂️','Activité'],['ia','✨','Agents IA'],['msg','💬','Messages'],['manage','☰','Gérer']],cur=['clients','intervenants','salles','factures'].includes(V)?'manage':V;
+$('#nv').innerHTML=nv.map(n=>`<button class="${cur==n[0]?'on':''}" onclick="go('${n[0]}')"><span>${n[1]}</span>${n[2]}</button>`).join('');
+const a=alerts().length;$('#bd').textContent=a||'';$('#bd').style.display=a?'':'none';if(V=='msg')gm()}
+R();
+</script></body></html>
